@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Enter Round</h1>
+    <h3>as {{ player }}</h3>
+    <form action='' method='post' name='login'>
+        {{ form.hidden_tag() }}
+        <p>
+            Date:  {{ form.dateplayed(size=10) }}
+            <br>
+        </p>
+        <p>
+            Course: {{ form.coursename(size=35) }}
+            Tee Box:  {{ form.teebox(size=15) }}
+            <br>
+        </p>
+        <p>
+            Slope: {{ form.slope(size=5) }}
+            Rating: {{ form.rating(size=5) }}
+            <br>
+        </p>
+        <p>Putts:<br>
+            Front: {{ form.putts_front(size=5) }}
+            Back: {{ form.putts_back(size=5) }}
+        </p>
+        <p>Strokes<br>
+            Front: {{ form.strokes_front(size=5) }}
+            Back: {{ form.strokes_back(size=5) }}
+        </p>
+        <p><input type='submit' value='Submit Round'></p>
+    </form>
+{% endblock %}
