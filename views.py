@@ -1,6 +1,7 @@
-from __init__ import app
-from flask import render_template, flash, redirect, url_for
+from __init__ import app, db
+from flask import render_template, flash, redirect, url_for, request
 from forms import LoginForm, EnterRoundForm
+from models import Round
 
 # index & home page routing
 @app.route('/')
@@ -26,8 +27,9 @@ def login():
 def enter_round():
     player = ('Adam Simon')
     form = EnterRoundForm()
-    if form.validate_on_submit():
-        round = Round(playerid = 1,
+    if request.method == "POST":
+        print(form.errors)
+        round_obj = Round(playerid = 1,
                     courseid = 1,
                     dateplayed = form.dateplayed.data,
                     slope = form.slope.data,
@@ -37,12 +39,13 @@ def enter_round():
                     strokes_total = int(form.strokes_front.data) + int(form.strokes_back.data),
                     putts_front = form.putts_front.data,
                     putts_back = form.putts_back.data,
-                    putts_total = int(form.putts_front.data) + int(putts_back.form.data),
-                    strokes_front = form.strokes_front.data
+                    putts_total = int(form.putts_front.data) + int(form.putts_back.data),
+                    handicap = form.handicap.data,
+                    quota = form.quota.data,
                     )
-        flash("You're round at {coursename} on {dateplayed} has been submitted to the GateKeeper").format(
-            form.coursename.date, form.dateplayed.data)
-        return render_template('enter_round.html')
+        db.session.add(round_obj)
+        flash("You're round at {coursename} on {dateplayed} has been submitted to the GateKeeper").format(form.coursename.date, form.dateplayed.data)
+        return redirect(url_for('index'))
     return render_template('enter_round.html',
                             title='Enter Round',
                             player=player,

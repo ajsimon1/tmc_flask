@@ -2,8 +2,9 @@
 {% block content %}
     <h1>Enter Round</h1>
     <h3>as {{ player }}</h3>
-    <form action='' method='post' name='login'>
+    <form action="" method="POST" name="enter_round">
         {{ form.hidden_tag() }}
+
         <p>
             Date:  {{ form.dateplayed(size=10) }}
             <br>
@@ -26,6 +27,6 @@
             Front: {{ form.strokes_front(size=5) }}
             Back: {{ form.strokes_back(size=5) }}
         </p>
-        <p><input type='submit' value='Submit Round'></p>
+        <p><input type='submit' value='Send'></p>
     </form>
 {% endblock %}
