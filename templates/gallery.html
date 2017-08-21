@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>tMC Gallery</h1>
+                {% if images %}
+                    <!--<p>{{ images }}</p>-->
+                    <h4>Upload more pictures <a href="{{ url_for('upload') }}">here</h4>
+                    {% for image in images %}
+                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                            <img class="img-responsive" src="{{ url_for('send_image', filename=image) }}">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>No iamges available in our gallery, how about you add some</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

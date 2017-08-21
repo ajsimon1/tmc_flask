@@ -7,10 +7,14 @@ class Player(db.Model):
     nickname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     cellphone = db.Column(db.Integer, nullable=True)
+    password = db.Column(db.String(100), nullable=False)
     handicap = db.Column(db.Integer, nullable=True)
     quota = db.Column(db.Integer, nullable=True)
     avg_strokes = db.Column(db.Integer, nullable=True)
     avg_putts = db.Column(db.Integer, nullable=True)
+    # is_tmc = db.BooleanField(default=True)
+    # is_admin = db.BooleanField(default=False)
+    # is_nfl = db.BooleanField(default=True)
 
     @property
     def is_authenticated(self):
@@ -24,8 +28,17 @@ class Player(db.Model):
     def is_anonymous(self):
         return False
 
+    @property
+    def is_mangine_classic(self):
+        return self.is_tmc
+
+    @property
+    def is_admin(self):
+        return self.is_admin
+
     def get_id(self):
         return str(self.playerid)
+
 
     def __repr__(self):
         return '<{firstname} {lastname}, {handicap}>'.format(
@@ -71,6 +84,22 @@ class Round(db.Model):
     putts_back = db.Column(db.Integer, nullable=False)
     putts_total = db.Column(db.Integer, nullable=False)
     quota = db.Column(db.Integer, nullable=False)
+    handicap = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, courseid, dateplayed, slope, rating, strokes_front, strokes_back, strokes_total, putts_front, putts_back, putts_total, quota, handicap):
+        self.courseid = courseid
+        self.dateplayed = dateplayed
+        self.slope = slope
+        self.rating = rating
+        self.strokes_front = strokes_front
+        self.strokes_back = strokes_back
+        self.strokes_total = strokes_total
+        self.putts_front = putts_front
+        self.putts_back = putts_back
+        self.putts_total = putts_total
+        self.quota = quota
+        self.handicap = handicap
+
 
     def __repr__(self):
         return '<round {roundid} played on {dateplayed} at {courseid}. Shot {strokes_total} with {quota} quota>'.format(

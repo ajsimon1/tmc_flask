@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block content %}
+    <!-- {{ super() }} -->
+    <h1>Enter Facility Information</h1>
+    <h4>Facility name required, all other information is optional</h4>
+    <form action='' method='post' name='clia_api'>
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            {{ render_field(field) }}
+            <br>
+        {% endfor %}
+        <p><input type='submit' value='Ping API'></p>
+
+    </form>
+    <h6>To see actual data set click
+        <a href="https://data.cms.gov/Medicare-Clinical-Laboratory-Improvement-Amendment/Provider-of-Services-CLIA-June-2017/vsj5-54b8/data">here</a>
+    </h6>
+    {% if data %}
+        <table>
+            <tr style="padding: 10px;">
+                <th style="padding: 10px;">CLIA #</th>
+                <th style="padding: 10px;">Facility Name</th>
+                <th style="padding: 10px;">Street Address</th>
+                <th style="padding: 10px;">City</th>
+                <th style="padding: 10px;">State</th>
+                <th style="padding: 10px;">Zip</th>
+            </tr>
+            {% for item in data %}
+            <tr style="padding: 10px;">
+                <td style="padding: 10px;">
+                    {{ item["prvdr_num"] }}
+                </td>
+                <td style="padding: 10px;">
+                    {{ item["fac_name"] }}
+                </td>
+                <td style="padding: 10px;">
+                    {{ item["st_adr"] }}
+                </td>
+                <td style="padding: 10px;">
+                    {{ item["city_name"] }}
+                </td>
+                <td style="padding: 10px;">
+                    {{ item["state_cd"] }}
+                </td>
+                <td style="padding: 10px;">
+                    {{ item["zip_cd"] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h5>There are no results to display</h5>
+    {% endif %}
+{% endblock %}

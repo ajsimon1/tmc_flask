@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_field %}
+{% block content %}
+    {{ super() }}
+    <h1>Register</h1>
+    <form action='' method='post' name='register'>
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            {{ render_field(field) }}
+            <br>
+        {% endfor %}
+        <p><input type='submit' value='Register'></p>
+    </form>
+    <h6>Already registered? Login <a href="{{ url_for('login') }}">here</a> and keep your trap shut</h6>
+{% endblock %}
